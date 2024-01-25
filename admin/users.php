@@ -3,7 +3,7 @@ session_start();
 include('../action/User.php');
 $dod = new User();
 if (isset($_SESSION["user"])) {
-    $u = $_SESSION["user"];
+    $u = $_SESSION["userLogin"];
     $user = $dod->getUserById($u['UserID']);
     $users = $dod->getUsers($u['RoleID'], $u['CelluleID']);
 }
@@ -63,6 +63,12 @@ if (isset($_SESSION["user"])) {
                 </div>
                 <div class="navbar-nav w-100">
                     <a href="users.php" class="nav-item nav-link active"><i class="fa fa-user me-2"></i>Membres</a>
+                </div>
+                <div class="navbar-nav w-100">
+                    <a href="pub.php" class="nav-item nav-link"><i class="fa fa-newspaper me-2"></i>Pub</a>
+                </div>
+                <div class="navbar-nav w-100">
+                    <a href="projects.php" class="nav-item nav-link"><i class="fa fa-newspaper me-2"></i> Projects </a>
                 </div>
             </nav>
         </div>
@@ -166,7 +172,34 @@ if (isset($_SESSION["user"])) {
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <div class="col-12">
-                        <h2>User List</h2>
+                    <div class="row">
+                        <h3 class="col-md-4">User List</h3>
+                        
+                        <div class="col-md-4 text-center">
+                            <!-- Search Bar -->
+                            <div class="mb-3">
+                                <input type="text" class="form-control" id="searchBar" placeholder="Enter name to search">
+                            </div>
+                        </div>
+                        
+                        <div class="col-md-4 text-end">
+                            <!-- Filter by Cellule -->
+                            <div class="mb-3">
+                                <select class="form-select" id="filterCellule">
+                                    <?php
+                                        $cellules = $dod->getAllCellules();
+                                        echo '<option value="">All Cellules</option>';
+                                        
+                                        foreach ($cellules as $cellule) {
+                                            echo '<option value="' . $cellule['CelluleID'] . '">' . $cellule['Label'] . '</option>';
+                                        }
+                                    ?>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                        
                         <table class="table table-striped">
                             <thead>
                                 <tr>

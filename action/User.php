@@ -211,7 +211,7 @@ class User {
         // Sanitize the email
         $email = mysqli_real_escape_string($dbConnection, $email);
         // Retrieve user details including AccountState
-        $query = "SELECT UserID, Password, AccountState FROM Users WHERE Email='$email' LIMIT 1";
+        $query = "SELECT * FROM Users WHERE Email='$email' LIMIT 1";
         $r = mysqli_query($dbConnection, $query);
         if ($r && mysqli_num_rows($r) > 0) {
             $userDetails = mysqli_fetch_assoc($r);
@@ -231,6 +231,55 @@ class User {
         $_SESSION['failLogin'] = "Invalid email or password";
         return false ;
     }
+
+    public function getCelluleLabelByUserId($userId) {
+        global $dbConnection;
+        $userId = mysqli_real_escape_string($dbConnection, $userId);
+        $query = "SELECT c.Label FROM Cellule c
+                  INNER JOIN Users u ON c.CelluleID = u.CelluleID
+                  WHERE u.UserID = '$userId'";
+        $result = $dbConnection->query($query);
+
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row['Label'];
+        }
+
+        return null;
+    }
+
+    public function getProjectNameByUserId($userId) {
+        global $dbConnection;
+        $userId = mysqli_real_escape_string($dbConnection, $userId);
+        $query = "SELECT p.Title FROM Projects p
+                  INNER JOIN Users u ON p.ProjectID = u.ProjectID
+                  WHERE u.UserID = '$userId'";
+        $result = $dbConnection->query($query);
+
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row['Title'];
+        }
+
+        return null;
+    }
+    public function getRoleNameByUserId($userId) {
+        global $dbConnection;
+        $userId = mysqli_real_escape_string($dbConnection, $userId);
+        $query = "SELECT r.RoleName FROM Roles r
+                  INNER JOIN Users u ON r.RoleID = u.RoleID
+                  WHERE u.UserID = '$userId'";
+        $result = $dbConnection->query($query);
+
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row['RoleName'];
+        }
+
+        return null;
+    }
+
+
     
     
     
@@ -426,6 +475,67 @@ class User {
         }
     }
 
+
+    public function assignCellulee($userId, $celluleId) {
+        global $dbConnection;
+
+        // Perform the database update for assigning to Cellule
+        // Use prepared statements to prevent SQL injection
+        $query = "UPDATE users SET CelluleID = ? WHERE UserID = ?";
+        $stmt = $dbConnection->prepare($query);
+        $stmt->bind_param("ii", $celluleId, $userId);
+
+        // Execute the statement
+        $result = $stmt->execute();
+
+        // Check if the update was successful
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function assignProject($userId, $projectId) {
+        global $dbConnection;
+
+        // Perform the database update for assigning to Project
+        // Use prepared statements to prevent SQL injection
+        $query = "UPDATE users SET ProjectID = ? WHERE UserID = ?";
+        $stmt = $dbConnection->prepare($query);
+        $stmt->bind_param("ii", $projectId, $userId);
+
+        // Execute the statement
+        $result = $stmt->execute();
+
+        // Check if the update was successful
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function assignRolee($userId, $roleId) {
+        global $dbConnection;
+
+        // Perform the database update for assigning to Role
+        // Use prepared statements to prevent SQL injection
+        $query = "UPDATE users SET RoleID = ? WHERE UserID = ?";
+        $stmt = $dbConnection->prepare($query);
+        $stmt->bind_param("ii", $roleId, $userId);
+
+        // Execute the statement
+        $result = $stmt->execute();
+
+        // Check if the update was successful
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public function assignToProjet($projetId) {
         global $dbConnection;
 
@@ -506,7 +616,7 @@ class User {
         $cellules = [];
         if ($result) {
             while ($row = $result->fetch_assoc()) {
-                $cellules[$row['CelluleID']] = $row['Label'];
+                $cellules[] = $row; // Add the entire row to the $cellules array
             }
         } else {
             // Print an error message if the query fails

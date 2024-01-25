@@ -26,6 +26,111 @@ if (isset($_SESSION["user"])) {
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+    <style>
+        .tree {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+
+        .tree ul {
+            padding-top: 20px;
+            position: relative;
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+        }
+
+        .tree li {
+            float: left;
+            text-align: center;
+            list-style-type: none;
+            position: relative;
+            padding: 20px 5px 0 5px;
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+        }
+
+        .tree li::before, .tree li::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 50%;
+            border-top: 1px solid #ccc;
+            width: 50%;
+            height: 20px;
+        }
+
+        .tree li::after {
+            right: auto;
+            left: 50%;
+            border-left: 1px solid #ccc;
+        }
+
+        .tree li:only-child::after, .tree li:only-child::before {
+            display: none;
+        }
+
+        .tree li:only-child {
+            padding-top: 0;
+        }
+
+        .tree li:first-child::before, .tree li:last-child::after {
+            border: 0 none;
+        }
+
+        .tree li:last-child::before {
+            border-right: 1px solid #ccc;
+            border-radius: 0 5px 0 0;
+            -webkit-border-radius: 0 5px 0 0;
+            -moz-border-radius: 0 5px 0 0;
+        }
+
+        .tree li:first-child::after {
+            border-radius: 5px 0 0 0;
+            -webkit-border-radius: 5px 0 0 0;
+            -moz-border-radius: 5px 0 0 0;
+        }
+
+        .tree ul ul::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            border-left: 1px solid #ccc;
+            width: 0;
+            height: 20px;
+        }
+
+        .tree li a {
+            border: 1px solid #ccc;
+            padding: 5px 10px;
+            text-decoration: none;
+            color: #666;
+            font-family: Arial, sans-serif;
+            font-size: 11px;
+            display: inline-block;
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            -moz-border-radius: 5px;
+            transition: all 0.5s;
+            -webkit-transition: all 0.5s;
+            -moz-transition: all 0.5s;
+        }
+
+        .tree li a:hover, .tree li a:hover+ul li a {
+            background: #c8e4f8;
+            color: #000;
+            border: 1px solid #94a0b4;
+        }
+
+        .tree li a:hover+ul li::after,
+        .tree li a:hover+ul li::before,
+        .tree li a:hover+ul::before,
+        .tree li a:hover+ul ul::before {
+            border-color: #94a0b4;
+        }
+    </style>
 </head>
 
 <body>
@@ -241,48 +346,49 @@ if (isset($_SESSION["user"])) {
 
             
 
-            <div class="container mt-5">
-                <h2>Club Hierarchy</h2>
-
-                <ul class="list-group">
-                    <li class="list-group-item" data-bs-toggle="collapse" href="#topLevel"><strong>Top Level</strong></li>
-                    <div class="collapse" id="topLevel">
-                        <li class="list-group-item">Parrain (Mentor)</li>
-                        <li class="list-group-item">President</li>
-                        <li class="list-group-item">Vice President</li>
-                    </div>
-
-                    <li class="list-group-item" data-bs-toggle="collapse" href="#secondLevel"><strong>Second Level</strong></li>
-                    <div class="collapse" id="secondLevel">
-                        <li class="list-group-item">Secrétaire Général (Secretary General)</li>
-                        <li class="list-group-item">Adjoint Secrétaire Général (Deputy Secretary General)</li>
-                        <li class="list-group-item">Community Manager</li>
-                    </div>
-
-                    <li class="list-group-item" data-bs-toggle="collapse" href="#thirdLevel"><strong>Third Level</strong></li>
-                    <div class="collapse" id="thirdLevel">
-                        <li class="list-group-item">Responsable de Cellule (Cell Leader) 1</li>
-                        <li class="list-group-item">Responsable de Cellule (Cell Leader) 2</li>
-                        <li class="list-group-item">Responsable de Cellule (Cell Leader) 3</li>
-                        <li class="list-group-item">Responsable de Cellule (Cell Leader) 4</li>
-                        <li class="list-group-item">Responsable de Cellule (Cell Leader) 5</li>
-                    </div>
-
-                    <li class="list-group-item" data-bs-toggle="collapse" href="#fourthLevel"><strong>Fourth Level</strong></li>
-                    <div class="collapse" id="fourthLevel">
-                        <li class="list-group-item">Co-Responsable de Cellule (Co-Cell Leader) 1</li>
-                        <li class="list-group-item">Co-Responsable de Cellule (Co-Cell Leader) 2</li>
-                        <li class="list-group-item">Co-Responsable de Cellule (Co-Cell Leader) 3</li>
-                        <li class="list-group-item">Co-Responsable de Cellule (Co-Cell Leader) 4</li>
-                        <li class="list-group-item">Co-Responsable de Cellule (Co-Cell Leader) 5</li>
-                    </div>
-
-                    <li class="list-group-item" data-bs-toggle="collapse" href="#members"><strong>Members</strong></li>
-                    <div class="collapse" id="members">
-                        <li class="list-group-item">Regular members within each cellule</li>
-                    </div>
+            <!--
+            We will create a family tree using just CSS(3)
+            The markup will be simple nested lists
+            -->
+            <div class="tree">
+                <ul>
+                    <li>
+                        <a href="#">Parrain</a>
+                        <ul>
+                            <li>
+                                <a href="#">Child</a>
+                                <ul>
+                                    <li>
+                                        <a href="#">Grand Child</a>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <a href="#">Child</a>
+                                <ul>
+                                    <li><a href="#">Grand Child</a></li>
+                                    <li>
+                                        <a href="#">Grand Child</a>
+                                        <ul>
+                                            <li>
+                                                <a href="#">Great Grand Child</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Great Grand Child</a>
+                                            </li>
+                                            <li>
+                                                <a href="#">Great Grand Child</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Grand Child</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
+
 
 
 
@@ -291,7 +397,7 @@ if (isset($_SESSION["user"])) {
 
 
             <!-- Footer Start -->
-            <div class="container-fluid pt-4 px-4" >
+            <div class="container-fluid pt-4 px-4" style="margin-top : 25%;">
                 <div class="bg-light rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">

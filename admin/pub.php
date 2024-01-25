@@ -3,8 +3,8 @@ session_start();
 include('../action/User.php');
 include('../action/Pub.php');
 $dod = new User();
-if (isset($_SESSION["user"])) {
-    $u = $_SESSION["user"];
+if (isset($_SESSION["userLogin"])) {
+    $u = $_SESSION["userLogin"];
     $user = $dod->getUserById($u['UserID']);
     $users = $dod->getUsers($u['RoleID'], $u['CelluleID']);
 } 
@@ -70,6 +70,9 @@ $pub = new Pub(); // Create an instance of the Pub class
                 </div>
                 <div class="navbar-nav w-100">
                     <a href="pub.php" class="nav-item nav-link active"><i class="fa fa-newspaper me-2"></i>Pub</a>
+                </div>
+                <div class="navbar-nav w-100">
+                    <a href="projects.php" class="nav-item nav-link"><i class="fa fa-newspaper me-2"></i> Projects </a>
                 </div>
             </nav>
         </div>

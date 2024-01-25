@@ -9,10 +9,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $password = $_POST["password"];
     // Validate login
     $result = $user->login($email, $password);
-
     if ($result) {
         // Login successful, redirect to home or dashboard
-        $_SESSION['user'] = $result;
+        $_SESSION['userLogin'] = $result;
         header("Location: admin/"); // Change this to the desired page
         exit();
     } else {

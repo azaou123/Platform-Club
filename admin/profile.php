@@ -68,6 +68,12 @@ if (isset($_GET['UserID'])) {
                 <div class="navbar-nav w-100">
                     <a href="users.php" class="nav-item nav-link active"><i class="fa fa-user me-2"></i>Membres</a>
                 </div>
+                <div class="navbar-nav w-100">
+                    <a href="pub.php" class="nav-item nav-link"><i class="fa fa-newspaper me-2"></i>Pub</a>
+                </div>
+                <div class="navbar-nav w-100">
+                    <a href="projects.php" class="nav-item nav-link"><i class="fa fa-newspaper me-2"></i> Projects </a>
+                </div>
             </nav>
         </div>
         <!-- Sidebar End -->
@@ -175,7 +181,7 @@ if (isset($_GET['UserID'])) {
                             <img src="<?php echo $user['Photo']; ?>" alt="<?php echo $user['NomComplet']; ?>" style="max-width: 100px; max-height: 100px;">
                         <?php else : ?>
                             <!-- Display default avatar if no photo is available -->
-                            <img src="https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-Vector.png" alt="Default Avatar" style="max-width: 50px; max-height: 50px;">
+                            <img wtyle="width : 200;" src="https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-Vector.png" alt="Default Avatar">
                         <?php endif; ?>
                     </div>
                     <div class="profile-info">
@@ -188,10 +194,10 @@ if (isset($_GET['UserID'])) {
                             <a class="nav-link active" id="posts-tab" data-toggle="tab" href="#posts">Infos</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="about-tab" data-toggle="tab" href="#about">About</a>
+                            <a class="nav-link" id="about-tab" data-toggle="tab" href="#about">Edit </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" id="photos-tab" data-toggle="tab" href="#photos">Photos</a>
+                            <a class="nav-link" id="photos-tab" data-toggle="tab" href="#photos">Affect</a>
                         </li>
                     </ul>
 
@@ -261,28 +267,35 @@ if (isset($_GET['UserID'])) {
                                     // Assuming $user is an instance of the User class
                                     $userId = $user['UserID'];
                                 
-                                    // Update the user information in the database
-                                    $newNomComplet = htmlspecialchars($_POST['edit_nomcomplet']);
-                                    $newMotif = htmlspecialchars($_POST['edit_motif']);
-                                    $newTelephone = htmlspecialchars($_POST['edit_telephone']);
-                                    $newEmail = htmlspecialchars($_POST['edit_email']);
-                                    $newFacebook = htmlspecialchars($_POST['edit_facebook']);
-                                    $newInsta = htmlspecialchars($_POST['edit_insta']);
-                                    $newLinkedin = htmlspecialchars($_POST['edit_linkedin']);
+                                    // Validate form data
+                                    $newNomComplet = htmlspecialchars(trim($_POST['edit_nomcomplet']));
+                                    $newMotif = htmlspecialchars(trim($_POST['edit_motif']));
+                                    $newTelephone = htmlspecialchars(trim($_POST['edit_telephone']));
+                                    $newEmail = htmlspecialchars(trim($_POST['edit_email']));
+                                    $newFacebook = htmlspecialchars(trim($_POST['edit_facebook']));
+                                    $newInsta = htmlspecialchars(trim($_POST['edit_insta']));
+                                    $newLinkedin = htmlspecialchars(trim($_POST['edit_linkedin']));
                                 
-                                    // Use the editUser method from the User class to update the database
-                                    $updateResult = $dod->editUser($userId, $newNomComplet, $newMotif, $newTelephone, $newEmail, '', $newFacebook, $newInsta, $newLinkedin);
+                                    // Perform additional validation if needed (e.g., check if email is valid)
                                 
-                                    if ($updateResult) {
-                                        // Display a success message using JavaScript alert
-                                        echo '<script>alert("User information updated successfully!");</script>';
-                                
-                                        // Optionally, redirect to the profile page after the alert
-                                        // header("Location: profile.php?UserID=$userId");
-                                        // exit();
+                                    // Check if required fields are not empty
+                                    if (empty($newNomComplet) || empty($newTelephone) || empty($newEmail)) {
+                                        echo '<script>alert("Please fill in all required fields.");</script>';
                                     } else {
-                                        // Display an error message using JavaScript alert
-                                        echo '<script>alert("Failed to update user information.");</script>';
+                                        // Update the user information in the database
+                                        $updateResult = $dod->editUser($userId, $newNomComplet, $newMotif, $newTelephone, $newEmail, '', $newFacebook, $newInsta, $newLinkedin);
+                                
+                                        if ($updateResult) {
+                                            // Display a success message using JavaScript alert
+                                            echo '<script>alert("User information updated successfully!");</script>';
+                                
+                                            // Optionally, redirect to the profile page after the alert
+                                            // header("Location: profile.php?UserID=$userId");
+                                            // exit();
+                                        } else {
+                                            // Display an error message using JavaScript alert
+                                            echo '<script>alert("Failed to update user information.");</script>';
+                                        }
                                     }
                                 }
                             ?>
@@ -328,64 +341,117 @@ if (isset($_GET['UserID'])) {
                         </div>
                         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
                         <div class="tab-pane fade" id="photos">
-                            <form id="assignmentForm" class="mt-4">
                                 <!-- Display current assignments -->
                                 <div class="form-group">
                                     <label>Current Assignments:</label>
                                     <ul>
-                                        <li>Cellule: <?php echo 'Cellule'; ?></li>
-                                        <li>Project: <?php echo 'Project'; ?></li>
-                                        <li>Role: <?php echo 'Role' ?></li>
+                                        <li>Cellule: <?php echo $dod->getCelluleLabelByUserId($userID); ?></li>
+                                        <li>Project: <?php 
+                                        // echo $dod->getProjectNameByUserId($userID); 
+                                        echo 'Not Yet !';
+                                        ?></li>
+                                        <li>Role: <?php echo $dod->getRoleNameByUserId($userID); ?></li>
                                     </ul>
                                 </div>
 
-                                <div class="form-group">
-                                    <label for="assign_cellule">Assign to Cellule:</label>
-                                    <select class="form-control" id="assign_cellule" name="assign_cellule">
-                                        <?php
-                                        // Call the function to get available cellules
-                                        $cellules = $dod->getAllCellules();
-                                        
-                                        // Loop through cellules and populate the dropdown
-                                        foreach ($cellules as $celluleID => $celluleName) {
-                                            echo "<option value=\"$celluleID\">$celluleName</option>";
+                                <?php
+                                    function displayDropdownOptions($items) {
+                                        foreach ($items as $id => $name) {
+                                            echo "<option value=\"$id\">$name</option>";
                                         }
-                                        ?>
-                                    </select>
-                                </div>
+                                    }
+                                ?>
+                                <?php
+                                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assignCellule'])) {
+                                    // Assuming $user is an instance of the User class
+                                    $userId = $user['UserID'];
 
-                                <div class="form-group">
-                                    <label for="assign_projet">Assign to Project:</label>
-                                    <select class="form-control" id="assign_projet" name="assign_projet">
-                                        <?php
-                                        // Call the function to get available projects
-                                        $projects = $dod->getAllProjects();
-                                        
-                                        // Loop through projects and populate the dropdown
-                                        foreach ($projects as $projectID => $projectName) {
-                                            echo "<option value=\"$projectID\">$projectName</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
+                                    // Get the selected cellule ID from the form
+                                    $selectedCelluleId = $_POST['assign_cellule'];
 
-                                <div class="form-group">
-                                    <label for="assign_role">Assign to Role:</label>
-                                    <select class="form-control" id="assign_role" name="assign_role">
-                                        <?php
-                                        // Call the function to get available roles
-                                        $roles = $dod->getAllRoles();
-                                        
-                                        // Loop through roles and populate the dropdown
-                                        foreach ($roles as $roleID => $roleName) {
-                                            echo "<option value=\"$roleID\">$roleName</option>";
-                                        }
-                                        ?>
-                                    </select>
-                                </div>
+                                    // Use the assignCellule method from the User class to update the database
+                                    $assignCelluleResult = $dod->assignCellulee($userId, $selectedCelluleId);
 
-                                <button type="button" id="assignButton" class="btn btn-primary">Assign</button>
-                            </form>
+                                    if ($assignCelluleResult) {
+                                        // Display a success message using JavaScript alert
+                                        echo '<script>alert("Assigned to Cellule successfully!");</script>';
+                                    } else {
+                                        // Display an error message using JavaScript alert
+                                        echo '<script>alert("Failed to assign to Cellule.");</script>';
+                                    }
+                                }
+                                ?>
+                                <?php
+                                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assignProject'])) {
+                                    // Assuming $user is an instance of the User class
+                                    $userId = $user['UserID'];
+
+                                    // Get the selected project ID from the form
+                                    $selectedProjectId = $_POST['assign_projet'];
+
+                                    // Use the assignProject method from the User class to update the database
+                                    $assignProjectResult = $dod->assignProject($userId, $selectedProjectId);
+
+                                    if ($assignProjectResult) {
+                                        // Display a success message using JavaScript alert
+                                        echo '<script>alert("Assigned to Project successfully!");</script>';
+                                    } else {
+                                        // Display an error message using JavaScript alert
+                                        echo '<script>alert("Failed to assign to Project.");</script>';
+                                    }
+                                }
+                                ?>
+                                <?php
+                                if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['assignRole'])) {
+                                    // Assuming $user is an instance of the User class
+                                    $userId = $user['UserID'];
+
+                                    // Get the selected role ID from the form
+                                    $selectedRoleId = $_POST['assign_role'];
+
+                                    // Use the assignRole method from the User class to update the database
+                                    $assignRoleResult = $dod->assignRolee($userId, $selectedRoleId);
+
+                                    if ($assignRoleResult) {
+                                        // Display a success message using JavaScript alert
+                                        echo '<script>alert("Assigned to Role successfully!");</script>';
+                                    } else {
+                                        // Display an error message using JavaScript alert
+                                        echo '<script>alert("Failed to assign to Role.");</script>';
+                                    }
+                                }
+                                ?>
+                                <form id="assignCelluleForm" class="mt-4">
+                                    <div class="form-group">
+                                        <label for="assign_cellule">Assign to Cellule:</label>
+                                        <select class="form-control" id="assign_cellule" name="assign_cellule">
+                                            <?php displayDropdownOptions($dod->getAllCellules()); ?>
+                                        </select>
+                                    </div>
+                                    <button type="button" id="assignCelluleButton" class="btn btn-primary">Assign Cellule</button>
+                                </form>
+
+                                <form id="assignProjectForm" class="mt-4">
+                                    <div class="form-group">
+                                        <label for="assign_projet">Assign to Project:</label>
+                                        <select class="form-control" id="assign_projet" name="assign_projet">
+                                            <?php displayDropdownOptions($dod->getAllProjects()); ?>
+                                        </select>
+                                    </div>
+                                    <button type="button" id="assignProjectButton" class="btn btn-primary">Assign Project</button>
+                                </form>
+
+                                <form id="assignRoleForm" class="mt-4">
+                                    <div class="form-group">
+                                        <label for="assign_role">Assign to Role:</label>
+                                        <select class="form-control" id="assign_role" name="assign_role">
+                                            <?php displayDropdownOptions($dod->getAllRoles()); ?>
+                                        </select>
+                                    </div>
+                                    <button type="button" id="assignRoleButton" class="btn btn-primary">Assign Role</button>
+                                </form>
+
+                               
                         </div>
                     </div>
                 </div>
