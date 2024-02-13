@@ -217,8 +217,8 @@ $pub = new Pub(); // Create an instance of the Pub class
                                                     $projects = $dod->getAllProjects();
                                                     
                                                     // Loop through projects and populate the dropdown
-                                                    foreach ($projects as $projectID => $projectName) {
-                                                        echo "<option value=\"$projectID\">$projectName</option>";
+                                                    foreach ($projects as $p) {
+                                                        echo "<option value=".$p['ProjectID'].">".$p['Title']."</option>";
                                                     }
                                                     ?>
                                                 </select>
@@ -315,8 +315,6 @@ $pub = new Pub(); // Create an instance of the Pub class
             <!-- Footer End -->
         </div>
         <!-- Content End -->
-
-
         <!-- Back to Top -->
         <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>

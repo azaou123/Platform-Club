@@ -21,8 +21,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $projects = $project->getAllProjects();
 // Deal With user 
 $dod = new User();
-if (isset($_SESSION["user"])) {
-    $u = $_SESSION["user"];
+if (isset($_SESSION["userLogin"])) {
+    $u = $_SESSION["userLogin"];
     $user = $dod->getUserById($u['UserID']);
 }
 $allUsers = $dod->getAllUsers();

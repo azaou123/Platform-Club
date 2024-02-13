@@ -2,7 +2,7 @@
 session_start();
 include('../action/User.php');
 $dod = new User();
-if (isset($_SESSION["user"])) {
+if (isset($_SESSION["userLogin"])) {
     $u = $_SESSION["userLogin"];
     $user = $dod->getUserById($u['UserID']);
     $users = $dod->getUsers($u['RoleID'], $u['CelluleID']);
@@ -173,7 +173,7 @@ if (isset($_SESSION["user"])) {
                 <div class="row g-4">
                     <div class="col-12">
                     <div class="row">
-                        <h3 class="col-md-4">User List</h3>
+                        <h3 class="col-md-4">Users List</h3>
                         
                         <div class="col-md-4 text-center">
                             <!-- Search Bar -->
@@ -203,7 +203,7 @@ if (isset($_SESSION["user"])) {
                         <table class="table table-striped">
                             <thead>
                                 <tr>
-                                    <th>Name</th>
+                                    <th>full Name</th>
                                     <th>Photo</th>
                                     <th>Actions</th>
                                 </tr>
@@ -217,7 +217,7 @@ if (isset($_SESSION["user"])) {
                                             <td><?php echo $p['NomComplet']; ?></td>
                                             <td>
                                                 <?php if ($p['Photo']) : ?>
-                                                    <img src="<?php echo $p['Photo']; ?>" alt="<?php echo $p['NomComplet']; ?>" style="max-width: 50px; max-height: 50px;">
+                                                    <img src="../uploads/users/<?php echo $p['Photo']; ?>" alt="<?php echo $p['NomComplet']; ?>" style="max-width: 50px; max-height: 50px;">
                                                 <?php else : ?>
                                                     <!-- Display default avatar if no photo is available -->
                                                     <img src="https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-Vector.png" alt="Default Avatar" style="max-width: 50px; max-height: 50px;">

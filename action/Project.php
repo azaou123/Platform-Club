@@ -1,10 +1,10 @@
 <?php
-
 include_once("Database.php");
 $dbSingleton = Database::getInstance();
 $dbConnection = $dbSingleton->getConnection();
 
-class Project {
+class Project
+{
     public $id;
     public $name;
     public $description;
@@ -12,7 +12,8 @@ class Project {
     public $meniature;
     public $idChef;
 
-    public function __construct($id, $name, $description, $timestamp, $meniature, $idChef) {
+    public function __construct($id, $name, $description, $timestamp, $meniature, $idChef)
+    {
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
@@ -21,16 +22,18 @@ class Project {
         $this->idChef = $idChef;
     }
 
-    public function getProjectById($projectId) {
+
+    public function getProjectById($projectId)
+    {
         global $dbConnection;
         // Assuming you have a connection to your database, adjust the query accordingly
         $query = "SELECT * FROM projects WHERE ProjectID = ?";
         $stmt = $dbConnection->prepare($query);
         $stmt->bind_param("i", $projectId);
-        
+
         if ($stmt->execute()) {
             $result = $stmt->get_result();
-            
+
             if ($result->num_rows > 0) {
                 // Fetch project details as an associative array
                 $projectDetails = $result->fetch_assoc();
@@ -47,7 +50,8 @@ class Project {
         $dbConnection->query("DELETE FROM project_user WHERE ProjectID = $projectId AND UserID = $userId");
     }
 
-    public function getAllProjects() {
+    public function getAllProjects()
+    {
         global $dbConnection;
         $projects = array();
         $query = "SELECT * FROM Projects";
@@ -70,9 +74,10 @@ class Project {
         return $projects;
     }
 
-    public function getAllUsers() {
+    public function getAllUsers()
+    {
         global $dbConnection;
-        
+
         // Provide a valid SELECT query to fetch all users
         $query = "SELECT UserID, NomComplet FROM Users";
         $result = $dbConnection->query($query);
@@ -92,7 +97,8 @@ class Project {
         return $users;
     }
 
-    public function addProject($name, $description, $meniature, $idChef) {
+    public function addProject($name, $description, $meniature, $idChef)
+    {
         global $dbConnection;
 
         // Handle file upload
@@ -148,7 +154,8 @@ class Project {
             }
         }
     }
-    public function deleteProject($id) {
+    public function deleteProject($id)
+    {
         global $dbConnection;
         // Fetch the Meniature file path before deleting the project
         $stmtSelect = $dbConnection->prepare("SELECT Meniature FROM Projects WHERE ProjectID = ?");
@@ -156,24 +163,24 @@ class Project {
             $_SESSION['failDeleteProject'] = 'Error in preparing SELECT statement';
             return;
         }
-    
+
         $stmtSelect->bind_param("i", $id);
         $stmtSelect->execute();
         $stmtSelect->bind_result($meniaturePath);
         $stmtSelect->fetch();
         $stmtSelect->close();
-    
+
         // Now, delete the project from the database
         $stmtDelete = $dbConnection->prepare("DELETE FROM Projects WHERE ProjectID = ?");
         if (!$stmtDelete) {
             $_SESSION['failDeleteProject'] = 'Error in preparing DELETE statement';
             return;
         }
-    
+
         $stmtDelete->bind_param("i", $id);
         $resultDelete = $stmtDelete->execute();
         $stmtDelete->close();
-    
+
         // Check if the project was deleted successfully
         if ($resultDelete) {
             // Delete the associated Meniature file if it exists
@@ -190,8 +197,72 @@ class Project {
             $_SESSION['failDeleteProject'] = 'Failure: Retry Again';
         }
     }
-    
-    public function affectUsersToProject($projectId, $userIds) {
+
+    public function submitBadgeForm($cne, $idProject)
+    {
+        global $dbConnection;
+
+        $cne = mysqli_real_escape_string($dbConnection, $cne);
+        $idProject = mysqli_real_escape_string($dbConnection, $idProject);
+
+        $sql = "SELECT * FROM FullTexts WHERE (cne = '$cne' OR appogee = '$cne') AND id_project = '$idProject'";
+        $result = $dbConnection->query($sql);
+
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+            return $user ;
+        } else {
+            return false ;
+        }
+    }
+
+    public function addFullText($data)
+    {
+        global $dbConnection;
+        // Assuming your table name is FullTexts
+        $tableName = "FullTexts";
+        // Extract data from the form
+        $id_project = mysqli_real_escape_string($dbConnection, $data['id_project']);
+        $full_name = mysqli_real_escape_string($dbConnection, $data['full-name']);
+        $major = mysqli_real_escape_string($dbConnection, $data['major']);
+        $appogee = mysqli_real_escape_string($dbConnection, $data['appogee']);
+        $cne = mysqli_real_escape_string($dbConnection, $data['cne']);
+        $email = mysqli_real_escape_string($dbConnection, $data['email']);
+        $whatsapp = mysqli_real_escape_string($dbConnection, $data['whatsapp']);
+        // Process file upload
+        if ($_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+            // Set a unique filename to avoid overwriting existing files
+            $targetDir = '../uploads/studProjects/'; // Make sure this directory exists and is writable
+            $uniqueFilename = uniqid() . '_' . basename($_FILES['photo']['name']);
+            $targetFilePath = $targetDir . $uniqueFilename;
+            // Move the uploaded file to the destination directory
+            if (move_uploaded_file($_FILES['photo']['tmp_name'], $targetFilePath)) {
+                // Photo uploaded successfully
+                $photo = $targetFilePath;
+            } else {
+                // Failed to move the uploaded file
+                return false;
+            }
+        } else {
+            // File upload error
+            return false;
+        }
+        // Insert data into the database
+        $query = "INSERT INTO $tableName (id_project, full_name, major, appogee, cne, email, whatsapp, photo)
+        VALUES ('$id_project', '$full_name', '$major', '$appogee', '$cne', '$email', '$whatsapp', '$photo')";
+        $result = $dbConnection->query($query);
+        if ($result) {
+            // Data inserted successfully
+            return true;
+        } else {
+            // Failed to insert data
+            return false;
+        }
+    }
+
+
+    public function affectUsersToProject($projectId, $userIds)
+    {
         global $dbConnection;
         // Affect new users
         foreach ($userIds as $userId) {
@@ -199,13 +270,14 @@ class Project {
         }
     }
 
-    public function getUsersInProject($projectId) {
+    public function getUsersInProject($projectId)
+    {
         global $dbConnection;
         $sql = "SELECT users.*
                 FROM users
                 JOIN project_user ON users.UserID = project_user.UserID
                 WHERE project_user.ProjectID = ?";
-        
+
         $stmt = $dbConnection->prepare($sql);
         $stmt->bind_param("i", $projectId);
         $stmt->execute();
@@ -220,7 +292,8 @@ class Project {
 
 
     // Get users not assigned to the project
-    public function getAvailableUsers($projectId) {
+    public function getAvailableUsers($projectId)
+    {
         global $dbConnection;
         $sql = "SELECT users.*
                 FROM users
@@ -229,7 +302,7 @@ class Project {
                     FROM project_user
                     WHERE project_user.ProjectID = ?
                 )";
-        
+
         $stmt = $dbConnection->prepare($sql);
         $stmt->bind_param("i", $projectId);
         $stmt->execute();
@@ -243,7 +316,8 @@ class Project {
     }
 
 
-    public function updateProject($id, $name, $description, $meniature, $idChef) {
+    public function updateProject($id, $name, $description, $meniature, $idChef)
+    {
         global $dbConnection;
         // Provide a valid UPDATE query
         $query = "UPDATE Projects SET Title = '$name', Description = '$description', Meniature = '$meniature', ChefID = $idChef WHERE ProjectID = $id";

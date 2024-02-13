@@ -2,8 +2,8 @@
 session_start();
 include('../action/User.php');
 $dod = new User();
-if (isset($_SESSION["user"])) {
-    $u = $_SESSION["user"];
+if (isset($_SESSION["userLogin"])) {
+    $u = $_SESSION["userLogin"];
     $user = $dod->getUserById($u['UserID']);
 }
 ?>
