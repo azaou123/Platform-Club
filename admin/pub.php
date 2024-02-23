@@ -7,7 +7,7 @@ if (isset($_SESSION["userLogin"])) {
     $u = $_SESSION["userLogin"];
     $user = $dod->getUserById($u['UserID']);
     $users = $dod->getUsers($u['RoleID'], $u['CelluleID']);
-} 
+}
 // Include the Pub class
 
 $pub = new Pub(); // Create an instance of the Pub class
@@ -36,7 +36,8 @@ $pub = new Pub(); // Create an instance of the Pub class
 <body>
     <div class="container-xxl position-relative bg-white d-flex p-0">
         <!-- Spinner Start -->
-        <div id="spinner" class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+        <div id="spinner"
+            class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
             <div class="spinner-border text-primary" style="width: 3rem; height: 3rem;" role="status">
                 <span class="sr-only">Loading...</span>
             </div>
@@ -53,13 +54,15 @@ $pub = new Pub(); // Create an instance of the Pub class
                 <div class="d-flex align-items-center ms-4 mb-4">
                     <div class="position-relative">
                         <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
-                        <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
+                        <div
+                            class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1">
+                        </div>
                     </div>
                     <div class="ms-3">
-                        <h6 class="mb-0"><?php echo $user['NomComplet']; ?></h6>
-                        <php
-                            echo 'hi' ;
-                        ?>
+                        <h6 class="mb-0">
+                            <?php echo $user['NomComplet']; ?>
+                        </h6>
+                        <php echo 'hi' ; ?>
                     </div>
                 </div>
                 <div class="navbar-nav w-100">
@@ -101,7 +104,8 @@ $pub = new Pub(); // Create an instance of the Pub class
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
                             <a href="#" class="dropdown-item">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                    <img class="rounded-circle" src="img/user.jpg" alt=""
+                                        style="width: 40px; height: 40px;">
                                     <div class="ms-2">
                                         <h6 class="fw-normal mb-0">Jhon send you a message</h6>
                                         <small>15 minutes ago</small>
@@ -111,7 +115,8 @@ $pub = new Pub(); // Create an instance of the Pub class
                             <hr class="dropdown-divider">
                             <a href="#" class="dropdown-item">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                    <img class="rounded-circle" src="img/user.jpg" alt=""
+                                        style="width: 40px; height: 40px;">
                                     <div class="ms-2">
                                         <h6 class="fw-normal mb-0">Jhon send you a message</h6>
                                         <small>15 minutes ago</small>
@@ -121,7 +126,8 @@ $pub = new Pub(); // Create an instance of the Pub class
                             <hr class="dropdown-divider">
                             <a href="#" class="dropdown-item">
                                 <div class="d-flex align-items-center">
-                                    <img class="rounded-circle" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                                    <img class="rounded-circle" src="img/user.jpg" alt=""
+                                        style="width: 40px; height: 40px;">
                                     <div class="ms-2">
                                         <h6 class="fw-normal mb-0">Jhon send you a message</h6>
                                         <small>15 minutes ago</small>
@@ -158,7 +164,8 @@ $pub = new Pub(); // Create an instance of the Pub class
                     </div>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt="" style="width: 40px; height: 40px;">
+                            <img class="rounded-circle me-lg-2" src="img/user.jpg" alt=""
+                                style="width: 40px; height: 40px;">
                             <span class="d-none d-lg-inline-flex">John Doe</span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
@@ -179,64 +186,75 @@ $pub = new Pub(); // Create an instance of the Pub class
 
                         <!-- Display Publications in a Table -->
                         <div class="container-fluid pt-4 px-4">
-                        <div class="row">
-                            <div class="col-8"><h2 class="mb-4">Publications</h2></div>
-                            <div class="col-3">
-                                <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#addPublicationModal">
-                                    Add
-                                </button>
+                            <div class="row">
+                                <div class="col-8">
+                                    <h2 class="mb-4">Publications</h2>
+                                </div>
+                                <div class="col-3">
+                                    <button type="button" class="btn btn-primary mb-3" data-bs-toggle="modal"
+                                        data-bs-target="#addPublicationModal">
+                                        Add
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="modal fade" id="addPublicationModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="exampleModalLabel">Add Publication</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <!-- Add Publication Form -->
-                                        <form method="post" enctype="multipart/form-data">
-                                            <div class="mb-3">
-                                                <label for="pub_title" class="form-label">Publication Title</label>
-                                                <input type="text" class="form-control" id="pub_title" name="pub_title" required>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="pub_description" class="form-label">Publication Description</label>
-                                                <textarea class="form-control" id="pub_description" name="pub_description" rows="3" required></textarea>
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="pub_images" class="form-label">Upload Pictures</label>
-                                                <input type="file" class="form-control" id="pub_images" name="pub_images[]" multiple accept="image/*">
-                                            </div>
-                                            <div class="mb-3">
-                                                <label for="project_id" class="form-label">Select Project</label>
-                                                <select class="form-control" id="assign_projet" name="assign_projet">
-                                                    <?php
-                                                    // Call the function to get available projects
-                                                    $projects = $dod->getAllProjects();
-                                                    
-                                                    // Loop through projects and populate the dropdown
-                                                    foreach ($projects as $p) {
-                                                        echo "<option value=".$p['ProjectID'].">".$p['Title']."</option>";
-                                                    }
-                                                    ?>
-                                                </select>
-                                            </div>
-                                            <!-- Add more fields as needed -->
-                                            <button type="submit" class="btn btn-primary" name="add_publication">Add Publication</button>
-                                        </form>
+                            <div class="modal fade" id="addPublicationModal" tabindex="-1"
+                                aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Add Publication</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Add Publication Form -->
+                                            <form method="post" enctype="multipart/form-data">
+                                                <div class="mb-3">
+                                                    <label for="pub_title" class="form-label">Publication Title</label>
+                                                    <input type="text" class="form-control" id="pub_title"
+                                                        name="pub_title" required>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="pub_description" class="form-label">Publication
+                                                        Description</label>
+                                                    <textarea class="form-control" id="pub_description"
+                                                        name="pub_description" rows="3" required></textarea>
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="pub_images" class="form-label">Upload Pictures</label>
+                                                    <input type="file" class="form-control" id="pub_images"
+                                                        name="pub_images[]" multiple accept="image/*">
+                                                </div>
+                                                <div class="mb-3">
+                                                    <label for="project_id" class="form-label">Select Project</label>
+                                                    <select class="form-control" id="assign_projet"
+                                                        name="assign_projet">
+                                                        <?php
+                                                        // Call the function to get available projects
+                                                        $projects = $dod->getAllProjects();
+
+                                                        // Loop through projects and populate the dropdown
+                                                        foreach ($projects as $p) {
+                                                            echo "<option value=" . $p['ProjectID'] . ">" . $p['Title'] . "</option>";
+                                                        }
+                                                        ?>
+                                                    </select>
+                                                </div>
+                                                <!-- Add more fields as needed -->
+                                                <button type="submit" class="btn btn-primary" name="add_publication">Add
+                                                    Publication</button>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                        <?php
+                            <?php
                             if (isset($_POST['add_publication'])) {
                                 $title = $_POST['pub_title'];
                                 $description = $_POST['pub_description'];
                                 $projectID = $_POST['assign_projet'];
 
-                                $pubDirectory = '../uploads/' . preg_replace('/\s+/', '_', strtolower($title));
+                                $pubDirectory = '../uploads/pubs/' . preg_replace('/\s+/', '_', strtolower($title));
                                 if (!is_dir($pubDirectory)) {
                                     mkdir($pubDirectory, 0777, true);
                                 }
@@ -257,35 +275,35 @@ $pub = new Pub(); // Create an instance of the Pub class
 
                                 $pub->addPub($title, $description, $pubDirectory, $projectID);
                             }
-                        ?>
+                            ?>
 
 
-                        <!-- Display Publications in a Table -->
-                        <table class="table mt-4">
-                            <thead>
-                                <tr>
-                                    <th scope="col">Title</th>
-                                    <th scope="col">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                $publications = $pub->getAllPublications(); // Assuming you have a method in Pub to fetch all publications
-                                foreach ($publications as $publication) {
-                                    echo "<tr>";
-                                    echo "<td>{$publication['Title']}</td>";
-                                    echo "
+                            <!-- Display Publications in a Table -->
+                            <table class="table mt-4">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Title</th>
+                                        <th scope="col">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    $publications = $pub->getAllPublications(); // Assuming you have a method in Pub to fetch all publications
+                                    foreach ($publications as $publication) {
+                                        echo "<tr>";
+                                        echo "<td>{$publication['Title']}</td>";
+                                        echo "
                                         <td>
                                         <a href='edit_publication.php?id={$publication['PubID']}'>Edit</a> 
                                         | 
                                         <a href='#' onclick='confirmDelete({$publication['PubID']})'>Delete</a>
                                         </td>";
-                                    echo "</tr>";
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </div>
+                                        echo "</tr>";
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
 
                     <!-- JavaScript Libraries -->
@@ -301,13 +319,14 @@ $pub = new Pub(); // Create an instance of the Pub class
                 <div class="bg-light rounded-top p-4">
                     <div class="row">
                         <div class="col-12 col-sm-6 text-center text-sm-start">
-                            &copy; <a href="#">Your Site Name</a>, All Right Reserved. 
+                            &copy; <a href="#">Your Site Name</a>, All Right Reserved.
                         </div>
                         <div class="col-12 col-sm-6 text-center text-sm-end">
                             <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink. If you'd like to use the template without the footer author’s credit link/attribution link/backlink, you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
                             Designed By <a href="https://htmlcodex.com">HTML Codex</a>
-                        </br>
-                        Distributed By <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+                            </br>
+                            Distributed By <a class="border-bottom" href="https://themewagon.com"
+                                target="_blank">ThemeWagon</a>
                         </div>
                     </div>
                 </div>

@@ -9,6 +9,7 @@ $Clubcontroller = new ClubController();
 $club = $Clubcontroller->getClubDetails();
 // About Users 
 $user = new User();
+$members = $user->getAllUsers();
 // About Projects 
 
 // About Pubs 
@@ -26,102 +27,13 @@ $user = new User();
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/bootstrap-icons.css" rel="stylesheet">
     <link href="css/templatemo-kind-heart-charity.css" rel="stylesheet">
-    <!--
-
-TemplateMo 581 Kind Heart Charity
-
-https://templatemo.com/tm-581-kind-heart-charity
-
--->
 
 </head>
 
 <body id="section_1">
-    <header class="site-header">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-8 col-12 d-flex flex-wrap">
-                    <p class="d-flex me-4 mb-0">
-                        <i class="bi-geo-alt me-2"></i>
-                        <?php echo $club['AddressID']; ?>
-                    </p>
-                    <p class="d-flex mb-0">
-                        <i class="bi-envelope me-2"></i>
-                        <a href="mailto:info@company.com">
-                            <?php echo $club['Email']; ?>
-                        </a>
-                    </p>
-                </div>
-                <div class="col-lg-3 col-12 ms-auto d-lg-block d-none">
-                    <ul class="social-icon">
-                        <li class="social-icon-item">
-                            <a href="<?php echo $club['Facebook']; ?>" class="social-icon-link bi-facebook"></a>
-                        </li>
-                        <li class="social-icon-item">
-                            <a href="<?php echo $club['Insta']; ?>" class="social-icon-link bi-instagram"></a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </header>
-
-    <nav class="navbar navbar-expand-lg bg-light shadow-lg">
-        <div class="container">
-            <a class="navbar-brand" href="index.html">
-                <img src="<?php echo $club['Logo']; ?>" class="logo img-fluid" alt="Kind Heart Charity" width="200">
-                <span>
-                    IT Club FSSM
-                    <small>Together We Code Our Evolution</small>
-                </span>
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item">
-                        <a class="nav-link click-scroll" href="#top">Home</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link click-scroll" href="#section_2">About</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link click-scroll" href="#section_3">Causes</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link click-scroll" href="#section_4">Volunteer</a>
-                    </li>
-
-                    <li class="nav-item dropdown">
-                        <a class="nav-link click-scroll dropdown-toggle" href="#section_5"
-                            id="navbarLightDropdownMenuLink" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">News</a>
-
-                        <ul class="dropdown-menu dropdown-menu-light" aria-labelledby="navbarLightDropdownMenuLink">
-                            <li><a class="dropdown-item" href="news.html">News Listing</a></li>
-
-                            <li><a class="dropdown-item" href="news-detail.html">News Detail</a></li>
-                        </ul>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link click-scroll" href="#section_6">Contact</a>
-                    </li>
-
-                    <li class="nav-item ms-3">
-                        <a class="nav-link custom-btn custom-border-btn btn" href="login.php">Login</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
+    <?php
+    include('partitions/navbar.php');
+    ?>
     <main>
         <section class="hero-section hero-section-full-height">
             <div class="container-fluid">
@@ -191,9 +103,9 @@ https://templatemo.com/tm-581-kind-heart-charity
                     </div>
                     <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
                         <div class="featured-block d-flex justify-content-center align-items-center">
-                            <a href="donate.html" class="d-block">
+                            <a href="join.html" class="d-block">
                                 <img src="images/icons/hands.png" class="featured-block-image img-fluid" alt="">
-                                <p class="featured-block-text">Become an <strong>ITiste</strong></p>
+                                <p class="featured-block-text">Join as an <strong>IT Enthusiast</strong></p>
                             </a>
                         </div>
                     </div>
@@ -202,28 +114,26 @@ https://templatemo.com/tm-581-kind-heart-charity
                         <div class="featured-block d-flex justify-content-center align-items-center">
                             <a href="donate.html" class="d-block">
                                 <img src="images/icons/heart.png" class="featured-block-image img-fluid" alt="">
-
-                                <p class="featured-block-text"><strong>Caring</strong> Earth</p>
+                                <p class="featured-block-text">Support <strong>Technological Innovation</strong></p>
                             </a>
                         </div>
                     </div>
 
                     <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0 mb-md-4">
                         <div class="featured-block d-flex justify-content-center align-items-center">
-                            <a href="donate.html" class="d-block">
+                            <a href="volunteer.html" class="d-block">
                                 <img src="images/icons/receive.png" class="featured-block-image img-fluid" alt="">
-
-                                <p class="featured-block-text">Invest <strong>Time & Energy</strong></p>
+                                <p class="featured-block-text">Invest <strong>Time & Energy</strong> in IT</p>
                             </a>
                         </div>
                     </div>
 
                     <div class="col-lg-3 col-md-6 col-12 mb-4 mb-lg-0">
                         <div class="featured-block d-flex justify-content-center align-items-center">
-                            <a href="donate.html" class="d-block">
+                            <a href="scholarship.html" class="d-block">
                                 <img src="images/icons/scholarship.png" class="featured-block-image img-fluid" alt="">
-
-                                <p class="featured-block-text"><strong>Scholarship</strong> Program</p>
+                                <p class="featured-block-text">Explore <strong>Scholarship</strong> Opportunities in IT
+                                </p>
                             </a>
                         </div>
                     </div>
@@ -232,13 +142,15 @@ https://templatemo.com/tm-581-kind-heart-charity
             </div>
         </section>
 
+
+
+
         <section class="section-padding section-bg" id="section_2">
             <div class="container">
                 <div class="row">
 
                     <div class="col-lg-6 col-12 mb-5 mb-lg-0">
-                        <img src="images/group-people-volunteering-foodbank-poor-people.jpg"
-                            class="custom-text-box-image img-fluid" alt="">
+                        <img src="images/cpcp.png" class="custom-text-box-image img-fluid" alt="">
                     </div>
 
                     <div class="col-lg-6 col-12">
@@ -258,30 +170,26 @@ https://templatemo.com/tm-581-kind-heart-charity
                             <div class="col-lg-6 col-md-6 col-12">
                                 <div class="custom-text-box mb-lg-0">
                                     <h5 class="mb-3">Our Mission</h5>
-
-                                    <p>Sed leo nisl, posuere at molestie ac, suscipit auctor quis metus</p>
-
+                                    <p>Empowering enthusiasts of information technology through:</p>
                                     <ul class="custom-list mt-2">
                                         <li class="custom-list-item d-flex">
                                             <i class="bi-check custom-text-box-icon me-2"></i>
-                                            Charity Theme
+                                            Innovation in Technology
                                         </li>
-
                                         <li class="custom-list-item d-flex">
                                             <i class="bi-check custom-text-box-icon me-2"></i>
-                                            Semantic HTML
+                                            Knowledge Sharing
                                         </li>
                                     </ul>
                                 </div>
                             </div>
-
                             <div class="col-lg-6 col-md-6 col-12">
                                 <div class="custom-text-box d-flex flex-wrap d-lg-block mb-lg-0">
                                     <div class="counter-thumb">
                                         <div class="d-flex">
                                             <span class="counter-number" data-from="1" data-to="2009"
                                                 data-speed="1000"></span>
-                                            <span class="counter-number-text"></span>
+                                            <span class="counter-number-text">2015</span>
                                         </div>
 
                                         <span class="counter-text">Founded</span>
@@ -291,10 +199,12 @@ https://templatemo.com/tm-581-kind-heart-charity
                                         <div class="d-flex">
                                             <span class="counter-number" data-from="1" data-to="120"
                                                 data-speed="1000"></span>
-                                            <span class="counter-number-text">B</span>
+                                            <span class="counter-number-text">
+                                                <?php echo count($members); ?>
+                                            </span>
                                         </div>
 
-                                        <span class="counter-text">Donations</span>
+                                        <span class="counter-text">User</span>
                                     </div>
                                 </div>
                             </div>
@@ -443,7 +353,8 @@ https://templatemo.com/tm-581-kind-heart-charity
                                                 style="border-radius: 50%; margin-right: 10px;">
                                             <?php echo $chef['NomComplet']; ?>
                                         </span><br>
-                                        <a href="project/index.php?id=<?php echo $p['ProjectID']; ?>" class="btn btn-success p-0 w-50 my-3">Go</a>
+                                        <a href="project/index.php?id=<?php echo $p['ProjectID']; ?>"
+                                            class="btn btn-success p-0 w-50 my-3">Go</a>
                                     </div>
                                 </div>
                             </div>
@@ -482,30 +393,18 @@ https://templatemo.com/tm-581-kind-heart-charity
                         </form>
                         <?php
                         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-                            // Form is submitted, perform login
-                            $email = $_POST["email"];
+                            // Form is submitted, insert data into the database
                             $name = $_POST["name"];
                             $whatsapp = $_POST["whatsapp"];
+                            $email = $_POST["email"];
                             $message = $_POST["message"];
-                            // Validate login
-                            $result = $user->sendMessage($name, $whatsapp, $email, $message);
-                            if ($result) {
-                                echo '
-                                    <script>
-                                        alert("Message Envoyé Avec Succès");
-                                    </script>
-                                ';
-                            } else {
-                                echo '
-                                    <script>
-                                        alert("Erreur ! Merci De Re-essayer !");
-                                    </script>
-                                ';
-                            }
+
+                            // Prepare and execute the SQL statement to insert data
+                            $sql = "INSERT INTO contact_messages (name, whatsapp, email, message) VALUES ('$name', '$whatsapp', '$email', '$message')";
+                            $res = $dbConnection->query($sql);
                         }
                         ?>
                     </div>
-
                 </div>
             </div>
         </section>
@@ -520,7 +419,6 @@ https://templatemo.com/tm-581-kind-heart-charity
                     <div class="col-lg-12 col-12 mb-5">
                         <h2>Latest News</h2>
                     </div>
-
                     <div class="col-md-7 col-12">
                         <div class="news-block">
                             <div class="news-block-top">
@@ -580,64 +478,61 @@ https://templatemo.com/tm-581-kind-heart-charity
                     </div>
 
                     <div class="col-md-5 col-12 mx-auto">
-                        <form class="custom-form search-form">
-                            <input class="form-control" type="search" placeholder="Search" aria-label="Search">
-                            <button type="submit" class="form-control">
-                                <i class="bi-search"></i>
-                            </button>
-                        </form>
-                        <h5 class="mt-5 mb-3">Recent news</h5>
+                        <h5 class="mt-1 mb-3">Recent news</h5>
                         <?php
-                        for ($i = 1; $i < 4; $i++) {
-                            $pub = $pubs[$i];
-                            $photosFolder = "css/" . $pub["Repertoire"] . "/";
-                            $photos = scandir($photosFolder);
-                            $photos = array_diff($photos, array(".", ".."));
-                            if (count($photos) > 0) {
-                                foreach ($photos as $photo) {
-                                    $d = $photo;
+                        if (count($pubs) > 1) {
+                            for ($i = 1; $i < 4 && isset($pubs[$i]); $i++) {
+                                $pub = $pubs[$i];
+                                $photosFolder = "css/" . $pub["Repertoire"] . "/";
+                                $photos = scandir($photosFolder);
+                                $photos = array_diff($photos, array(".", ".."));
+                                if (count($photos) > 0) {
+                                    foreach ($photos as $photo) {
+                                        $d = $photo;
+                                    }
                                 }
-                            }
-                            ?>
-                            <div class="news-block news-block-two-col d-flex mt-4">
-                                <div class="row">
-                                    <div class="col-5">
-                                        <div class="news-block-two-col-image-wrap">
-                                            <a href="news-detail.html">
-                                                <img src="<?php echo $photosFolder . $d; ?>"
-                                                    class="news-image img-fluid mt-2" alt=""
-                                                    style="height:100px; width:150px;">
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="col-7">
-                                        <div class="news-block-two-col-info">
-                                            <div class="news-block-title mb-2">
-                                                <h6><a href="news-detail.html" class="news-block-title-link">
-                                                        <?php echo $pub['Title']; ?>
-                                                    </a>
-                                                </h6>
+                                ?>
+                                <div class="news-block news-block-two-col d-flex mt-4">
+                                    <div class="row">
+                                        <div class="col-5">
+                                            <div class="news-block-two-col-image-wrap">
+                                                <a href="news-detail.html">
+                                                    <img src="<?php echo $photosFolder . $d; ?>"
+                                                        class="news-image img-fluid mt-2" alt=""
+                                                        style="height:100px; width:150px;">
+                                                </a>
                                             </div>
-                                            <div class="news-block-date">
-                                                <p>
-                                                    <i class="bi-calendar4 custom-icon me-1"></i>
-                                                    <?php
-                                                    $content = str_split($pub['Description']);
-                                                    for ($j = 0; $j < 45; $j++) {
-                                                        echo $content[$j];
-                                                    }
-                                                    ?>
-                                                </p>
+                                        </div>
+                                        <div class="col-7">
+                                            <div class="news-block-two-col-info">
+                                                <div class="news-block-title mb-2">
+                                                    <h6><a href="news-detail.html" class="news-block-title-link">
+                                                            <?php echo $pub['Title']; ?>
+                                                        </a>
+                                                    </h6>
+                                                </div>
+                                                <div class="news-block-date">
+                                                    <p>
+                                                        <i class="bi-calendar4 custom-icon me-1"></i>
+                                                        <?php
+                                                        $content = str_split($pub['Description']);
+                                                        for ($j = 0; $j < 45; $j++) {
+                                                            echo $content[$j];
+                                                        }
+                                                        ?>
+                                                    </p>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        <?php } ?>
+                            <?php }
+                        } ?>
                     </div>
                 </div>
             </div>
         </section>
+
 
 
         <section class="testimonial-section section-padding section-bg">
@@ -651,130 +546,61 @@ https://templatemo.com/tm-581-kind-heart-charity
                         <div id="testimonial-carousel" class="carousel carousel-fade slide" data-bs-ride="carousel">
                             <div class="carousel-inner">
                                 <?php
+                                $index = 0; // Initialize index counter
                                 foreach ($stmts as $s) {
                                     ?>
-                                    <div class="carousel-item active">
+                                    <div class="carousel-item <?php if ($index === 0)
+                                        echo 'active'; ?>">
                                         <div class="carousel-caption">
                                             <h4 class="carousel-title">
                                                 <?php echo $s['statement']; ?>
                                             </h4>
-                                            <small class="carousel-name"><span class="carousel-name-title">
-                                                    <?php echo $s['name']; ?></small>
+                                            <small class="carousel-name">
+                                                <span class="carousel-name-title">
+                                                    <?php echo $s['name']; ?>
+                                                </span>
+                                            </small>
                                         </div>
                                     </div>
-                                <?php } ?>
-                                <ol class="carousel-indicators">
                                     <?php
-                                    foreach ($stmts as $s) {
-                                        ?>
-                                        <li data-bs-target="#testimonial-carousel" data-bs-slide-to="0" class="active">
-                                            <img <?php if (!$s['photo']) { ?> src="uploads/users/user.png" <?php } else { ?>
-                                                    src="uploads/statements/<?php echo $s['photo']; ?>" <?php } ?>
-                                                class="img-fluid rounded-circle avatar-image" alt="avatar">
-                                        </li>
-                                    <?php } ?>
-                                </ol>
+                                    $index++; // Increment index counter
+                                }
+                                ?>
                             </div>
+                            <ol class="carousel-indicators">
+                                <?php
+                                $index = 0; // Reset index counter
+                                foreach ($stmts as $s) {
+                                    ?>
+                                    <li data-bs-target="#testimonial-carousel" data-bs-slide-to="<?php echo $index; ?>"
+                                        <?php if ($index === 0)
+                                            echo 'class="active"'; ?>>
+                                        <img <?php if (!$s['photo']) { ?> src="uploads/users/user.png" <?php } else { ?>
+                                                src="uploads/statements/<?php echo $s['photo']; ?>" <?php } ?>
+                                            class="img-fluid rounded-circle avatar-image" alt="avatar">
+                                    </li>
+                                    <?php
+                                    $index++; // Increment index counter
+                                }
+                                ?>
+                            </ol>
                         </div>
                     </div>
-
                 </div>
             </div>
         </section>
 
+
+
+
     </main>
 
-    <footer class="site-footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-3 col-12 mb-4">
-                    <img src="images/logo.png" class="logo img-fluid" alt="">
-                </div>
 
-                <div class="col-lg-4 col-md-6 col-12 mb-4">
-                    <h5 class="site-footer-title mb-3">Quick Links</h5>
+    <?php
+    include('partitions/footer.php');
+    ?>
 
-                    <ul class="footer-menu">
-                        <li class="footer-menu-item"><a href="#" class="footer-menu-link">Our Story</a></li>
 
-                        <li class="footer-menu-item"><a href="#" class="footer-menu-link">Newsroom</a></li>
-
-                        <li class="footer-menu-item"><a href="#" class="footer-menu-link">Causes</a></li>
-
-                        <li class="footer-menu-item"><a href="#" class="footer-menu-link">Become a volunteer</a></li>
-
-                        <li class="footer-menu-item"><a href="#" class="footer-menu-link">Partner with us</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-4 col-md-6 col-12 mx-auto">
-                    <h5 class="site-footer-title mb-3">Contact Infomation</h5>
-
-                    <p class="text-white d-flex mb-2">
-                        <i class="bi-telephone me-2"></i>
-
-                        <a href="tel: 305-240-9671" class="site-footer-link">
-                            <?php echo $club['PhoneNumber']; ?>
-                        </a>
-                    </p>
-
-                    <p class="text-white d-flex">
-                        <i class="bi-envelope me-2"></i>
-
-                        <a href="mailto:info@yourgmail.com" class="site-footer-link">
-                            <?php echo $club['Email']; ?>
-                        </a>
-                    </p>
-
-                    <p class="text-white d-flex mt-3">
-                        <i class="bi-geo-alt me-2"></i>
-                        <?php echo $club['AddressID']; ?>
-                    </p>
-
-                    <a href="#" class="custom-btn btn mt-3">Login</a>
-                </div>
-            </div>
-        </div>
-
-        <div class="site-footer-bottom">
-            <div class="container">
-                <div class="row">
-
-                    <div class="col-lg-6 col-md-7 col-12">
-                        <p class="copyright-text mb-0">Copyright © 2036 <a href="#">Kind Heart</a> Charity Org.
-                            Design: <a href="https://templatemo.com" target="_blank">TemplateMo</a><br>Distribution:
-                            <a href="https://themewagon.com">ThemeWagon</a>
-                        </p>
-                    </div>
-
-                    <div class="col-lg-6 col-md-5 col-12 d-flex justify-content-center align-items-center mx-auto">
-                        <ul class="social-icon">
-                            <li class="social-icon-item">
-                                <a href="#" class="social-icon-link bi-twitter"></a>
-                            </li>
-
-                            <li class="social-icon-item">
-                                <a href="#" class="social-icon-link bi-facebook"></a>
-                            </li>
-
-                            <li class="social-icon-item">
-                                <a href="#" class="social-icon-link bi-instagram"></a>
-                            </li>
-
-                            <li class="social-icon-item">
-                                <a href="#" class="social-icon-link bi-linkedin"></a>
-                            </li>
-
-                            <li class="social-icon-item">
-                                <a href="https://youtube.com/templatemo" class="social-icon-link bi-youtube"></a>
-                            </li>
-                        </ul>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-    </footer>
 
     <!-- JAVASCRIPT FILES -->
     <script src="js/jquery.min.js"></script>
